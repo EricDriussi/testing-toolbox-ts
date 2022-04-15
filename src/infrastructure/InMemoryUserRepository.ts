@@ -10,6 +10,9 @@ export class InMemoryUserRepository implements UserRepository {
 	}
 
 	save (user: User): void {
+		if (!user.email.includes('@')) {
+			throw Error('INVALID EMAIL');
+		}
 		user.makeGuest(true);
 		this.database.write({ id: user.userId, object: user });
 	}
