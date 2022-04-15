@@ -1,7 +1,7 @@
-import { User } from '../src/domain/User';
 import { InMemoryUserRepository } from '../src/infrastructure/InMemoryUserRepository';
 import { UserFixture } from './UserFixture';
 import { ImaginaryDB } from './ImaginaryDB';
+import { UserBuilder } from './UserBuilder';
 
 describe('InMemoryUserRepository should', () => {
 	const testingDB = new ImaginaryDB();
@@ -13,7 +13,7 @@ describe('InMemoryUserRepository should', () => {
 
 	describe('FIND', () => {
 		it('a user if present', () => {
-			const savedUser = new User({ userId: '42', name: 'Peter' });
+			const savedUser = UserBuilder.init().withUserId('42').build();
 			fixture.writeToDB(savedUser);
 
 			const repo = new InMemoryUserRepository(testingDB);
@@ -22,9 +22,6 @@ describe('InMemoryUserRepository should', () => {
 		});
 
 		it('throw an exception if not present', () => {
-			const savedUser = new User({ userId: '42', name: 'Peter' });
-			fixture.writeToDB(savedUser);
-
 			const repo = new InMemoryUserRepository(testingDB);
 
 			expect(() => { repo.findByUserId('44'); }).toThrow(new Error('No User Found'));
@@ -33,12 +30,21 @@ describe('InMemoryUserRepository should', () => {
 
 	describe('SAVE', () => {
 		it('a user setting its role to guest', () => {
-			const savedUser = new User({ userId: '42', name: 'Peter' });
+			const savedUser = UserBuilder.init().withGuestRole(false).build();
 			const repo = new InMemoryUserRepository(testingDB);
 
 			repo.save(savedUser);
 
 			expect(fixture.checkRoleIsGuest(savedUser)).toEqual(true);
+		});
+
+		it('throw an exception if email is faulty', () => {
+			const faultyUser = UserBuilder.init().withEmail('doesn\'tWork').build();
+			fixture.writeToDB(faultyUser);
+
+			const repo = new InMemoryUserRepository(testingDB);
+
+			expect(() => { repo.save(faultyUser); }).toThrow(new Error('INVALID EMAIL'));
 		});
 	});
 });
