@@ -32,13 +32,13 @@ describe('ActualUserRepository should', () => {
 	});
 
 	describe('SAVE', () => {
-		it('a user setting its role to guest', () => {
+		it('a user', () => {
 			const savedUser = new User({ userId: '42', name: 'Peter' });
 			const repo = new ActualUserRepository(testingDB);
 
 			repo.save(savedUser);
 
-			expect(fixture.checkRoleIsGuest(savedUser)).toEqual(true);
+			expect(fixture.checkRoleIsGuest(savedUser)).toEqual(false);
 		});
 	});
 });

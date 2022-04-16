@@ -1,4 +1,5 @@
 import { UserRepository } from '../domain/UserRepository';
+import { User } from '../domain/User';
 
 export class UserService {
 	constructor (readonly repo: UserRepository) {
@@ -7,5 +8,16 @@ export class UserService {
 
 	doSomethingCool (): number {
 		return 40 + 29;
+	}
+
+	findGuest (guestId: string): User {
+		const foundUser = this.repo.findByUserId(guestId);
+		if (foundUser === null) {
+			throw Error('Not a guest user!');
+		}
+		if (!foundUser.isGuest()) {
+			throw Error('Not a guest user!');
+		}
+		return foundUser;
 	}
 }

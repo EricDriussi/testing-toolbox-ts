@@ -10,7 +10,6 @@ export class ActualUserRepository implements UserRepository {
 	}
 
 	save (user: User): void {
-		user.makeGuest(true);
 		this.database.write({ id: user.userId, object: user });
 	}
 
