@@ -1,6 +1,6 @@
 import { User } from '../domain/User';
 import { UserRepository } from '../domain/UserRepository';
-import { ImaginaryDB } from '../../tests/ImaginaryDB';
+import { ImaginaryDB } from './ImaginaryDB';
 
 export class InMemoryUserRepository implements UserRepository {
 	private database: ImaginaryDB;

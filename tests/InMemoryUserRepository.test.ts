@@ -1,7 +1,7 @@
 import { User } from '../src/domain/User';
 import { InMemoryUserRepository } from '../src/infrastructure/InMemoryUserRepository';
-import { UserFixture } from './UserFixture';
-import { ImaginaryDB } from './ImaginaryDB';
+import { UserFixture } from './helpers/UserFixture';
+import { ImaginaryDB } from '../src/infrastructure/ImaginaryDB';
 
 describe('InMemoryUserRepository should', () => {
 	const testingDB = new ImaginaryDB();
