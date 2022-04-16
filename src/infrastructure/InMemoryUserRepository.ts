@@ -13,7 +13,9 @@ export class InMemoryUserRepository implements UserRepository {
 		if (!user.email.includes('@')) {
 			throw Error('INVALID EMAIL');
 		}
-		user.makeGuest(true);
+		if (user.yearsSinceSignup === 0) {
+			throw Error('Signup was too recent');
+		}
 		this.database.write({ id: user.userId, object: user });
 	}
 

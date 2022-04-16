@@ -1,4 +1,4 @@
-import { MaritalStatus, User } from '../src/domain/User';
+import { MaritalStatus, Role, User } from '../src/domain/User';
 
 export class UserBuilder {
 	private userId: string;
@@ -6,7 +6,8 @@ export class UserBuilder {
 	private age: number;
 	private maritalStatus: string;
 	private email: string;
-	private guestRole?: boolean;
+	private role: Role;
+	private yearsSinceSignup: number;
 
 	private constructor () {
 		this.userId = 'irrelevantUserId';
@@ -14,7 +15,8 @@ export class UserBuilder {
 		this.age = 69;
 		this.maritalStatus = MaritalStatus.single;
 		this.email = 'irrelevant@Email';
-		this.guestRole = false;
+		this.role = Role.admin;
+		this.yearsSinceSignup = 1;
 	}
 
 	static init () {
@@ -41,8 +43,8 @@ export class UserBuilder {
 		return this;
 	}
 
-	withGuestRole (guestRole: boolean) {
-		this.guestRole = guestRole;
+	withGuestRole () {
+		this.role = Role.guest;
 		return this;
 	}
 
@@ -52,14 +54,15 @@ export class UserBuilder {
 	}
 
 	build () {
-		const { userId, name, age, maritalStatus, email, guestRole } = this;
+		const { userId, name, age, maritalStatus, email, role, yearsSinceSignup } = this;
 		return new User({
 			userId: userId,
 			name: name,
 			age: age,
 			marital: maritalStatus,
 			email: email,
-			guestRole: guestRole,
+			role: role,
+			yearsSinceSignup: yearsSinceSignup
 		});
 	}
 }

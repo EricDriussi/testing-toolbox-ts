@@ -2,6 +2,7 @@ import { InMemoryUserRepository } from '../src/infrastructure/InMemoryUserReposi
 import { UserFixture } from './UserFixture';
 import { ImaginaryDB } from './ImaginaryDB';
 import { UserBuilder } from './UserBuilder';
+import { UserMother } from './UserMother';
 
 describe('InMemoryUserRepository should', () => {
 	const testingDB = new ImaginaryDB();
@@ -29,13 +30,29 @@ describe('InMemoryUserRepository should', () => {
 	});
 
 	describe('SAVE', () => {
-		it('a user setting its role to guest', () => {
-			const savedUser = UserBuilder.init().withGuestRole(false).build();
+		it('a valid user', () => {
+			const savedUser = UserBuilder.init().build();
 			const repo = new InMemoryUserRepository(testingDB);
 
 			repo.save(savedUser);
 
-			expect(fixture.checkRoleIsGuest(savedUser)).toEqual(true);
+			expect(fixture.checkRoleIsGuest(savedUser)).toEqual(false);
+		});
+
+		it('a long-term married admin user', () => {
+			const heather = UserMother.longTermMarriedAdmin();
+			const repo = new InMemoryUserRepository(testingDB);
+
+			repo.save(heather);
+
+			expect(fixture.checkRoleIsGuest(heather)).toEqual(false);
+		});
+
+		it('throw an exception for a recent single guest user', () => {
+			const john = UserMother.recentSingleGuest();
+			const repo = new InMemoryUserRepository(testingDB);
+
+			expect(() => { repo.save(john); }).toThrow(new Error('Signup was too recent'));
 		});
 
 		it('throw an exception if email is faulty', () => {
