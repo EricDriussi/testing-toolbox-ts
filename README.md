@@ -1,62 +1,24 @@
-# ts-boilerplate
+# Testing Toolbox!
 
-This is a template repository. So just use the template and once you have your repository cloned on your pc just run `npm install` for installing all the dependencies.
+> Companion repo for [this](https://unixmagick.xyz/testing-convenience/) and [this](https://unixmagick.xyz/testing-isolation/) entry on my [blog](https://unixmagick.xyz/).
 
-## Scripts
+This repo contains some simple, practical examples of the concepts covered in the above-mentioned posts:
 
-```json
-"prepare": "npm run build",
-"prestart": "npm run build",
-"start": "node build/index.js",
-"dev": "npm run build -- --watch & nodemon build/index.js",
-"build": "npm run lint && npm test && tsc",
-"lint": "eslint . --ext .ts",
-"lint:fix": "npm run lint -- --fix",
-"test": "jest --verbose",
-"test:watch": "npm t -- --watchAll",
-"test:coverage": "npm t -- --coverage"
-```
+- Fixture
+- Builder
+- ObjectMother
+- Dummy
+- Fake
+- Stub
+- Spy
+- Mock
 
-## Test config
+The `master` branch only contains boilerplate.
 
-```json
-{
-  "roots": [
-    "<rootDir>/src"
-  ],
-  "testMatch": [
-    "**/__tests__/**/*.+(ts|js)", 
-    "**/?(*.)+(spec|test).+(ts|js)"
-  ],
-  "transform": {
-    "^.+\\.(ts)?$": "ts-jest"
-  }
-}
-```
+You'll find the examples in the accordingly named branches!
 
-## Linter config
+## Note
 
-```json
-{
-    "env": {
-        "es2021": true,
-        "node": true,
-        "jest": true
-    },
-    "extends": [
-        "standard"
-    ],
-    "parser": "@typescript-eslint/parser",
-    "parserOptions": {
-        "ecmaVersion": 12,
-        "sourceType": "module"
-    },
-    "plugins": [
-        "@typescript-eslint"
-    ],
-    "rules": {
-        "no-unused-vars": "off",
-        "@typescript-eslint/no-unused-vars": ["error"]
-    }
-}
-```
+Please keep in mind that these are just simple examples of useful testing tools.
+
+Concrete implementations are not to be taken seriously and the '*production code*' in this repo is kinda silly to say the least ;-).
