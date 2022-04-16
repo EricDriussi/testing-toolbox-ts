@@ -1,4 +1,4 @@
-import { MaritalStatus, User } from '../src/domain/User';
+import { MaritalStatus, User } from '../../src/domain/User';
 
 export class UserBuilder {
 	private userId: string;
