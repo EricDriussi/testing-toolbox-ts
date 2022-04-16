@@ -1,4 +1,4 @@
-import { MaritalStatus, Role, User } from '../src/domain/User';
+import { MaritalStatus, Role, User } from '../../src/domain/User';
 
 export class UserMother {
 	static longTermMarriedAdmin (): User {

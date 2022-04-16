@@ -1,5 +1,5 @@
-import { User } from '../src/domain/User';
-import { ImaginaryDB } from './ImaginaryDB';
+import { User } from '../../src/domain/User';
+import { ImaginaryDB } from '../../src/infrastructure/ImaginaryDB';
 
 export class UserFixture {
 	constructor (readonly database: ImaginaryDB) {
