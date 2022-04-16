@@ -1,9 +1,9 @@
 import { User } from '../src/domain/User';
-import { InMemoryUserRepository } from '../src/infrastructure/InMemoryUserRepository';
 import { UserFixture } from './helpers/UserFixture';
 import { ImaginaryDB } from '../src/infrastructure/ImaginaryDB';
+import { ActualUserRepository } from '../src/infrastructure/ActualUserRepository';
 
-describe('InMemoryUserRepository should', () => {
+describe('ActualUserRepository should', () => {
 	const testingDB = new ImaginaryDB();
 	const fixture = new UserFixture(testingDB);
 
@@ -16,7 +16,7 @@ describe('InMemoryUserRepository should', () => {
 			const savedUser = new User({ userId: '42', name: 'Peter' });
 			fixture.writeToDB(savedUser);
 
-			const repo = new InMemoryUserRepository(testingDB);
+			const repo = new ActualUserRepository(testingDB);
 
 			expect(repo.findByUserId('42')).toEqual(savedUser);
 		});
@@ -25,7 +25,7 @@ describe('InMemoryUserRepository should', () => {
 			const savedUser = new User({ userId: '42', name: 'Peter' });
 			fixture.writeToDB(savedUser);
 
-			const repo = new InMemoryUserRepository(testingDB);
+			const repo = new ActualUserRepository(testingDB);
 
 			expect(() => { repo.findByUserId('44'); }).toThrow(new Error('No User Found'));
 		});
@@ -34,7 +34,7 @@ describe('InMemoryUserRepository should', () => {
 	describe('SAVE', () => {
 		it('a user setting its role to guest', () => {
 			const savedUser = new User({ userId: '42', name: 'Peter' });
-			const repo = new InMemoryUserRepository(testingDB);
+			const repo = new ActualUserRepository(testingDB);
 
 			repo.save(savedUser);
 

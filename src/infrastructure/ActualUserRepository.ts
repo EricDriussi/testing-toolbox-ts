@@ -2,7 +2,7 @@ import { User } from '../domain/User';
 import { UserRepository } from '../domain/UserRepository';
 import { ImaginaryDB } from './ImaginaryDB';
 
-export class InMemoryUserRepository implements UserRepository {
+export class ActualUserRepository implements UserRepository {
 	private database: ImaginaryDB;
 
 	constructor (database: ImaginaryDB) {
