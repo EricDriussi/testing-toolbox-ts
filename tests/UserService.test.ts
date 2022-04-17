@@ -19,7 +19,7 @@ describe('UserService should', () => {
 			const service = new UserService(fakeRepo);
 			expect(service.findGuest('321').userId).toEqual('321');
 		});
-		it('return null if not a guest', () => {
+		it('throw error if not a guest', () => {
 			const service = new UserService(fakeRepo);
 			expect(() => { service.findGuest('123'); }).toThrow(Error('Not a guest user!'));
 		});
