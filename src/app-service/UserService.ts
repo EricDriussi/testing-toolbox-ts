@@ -20,4 +20,12 @@ export class UserService {
 		}
 		return foundUser;
 	}
+
+	save (user: User): void {
+		this.doSomethingCool();
+		if (user.isGuest()) {
+			return;
+		}
+		this.repo.save(user);
+	}
 }
