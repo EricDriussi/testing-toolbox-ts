@@ -1,4 +1,4 @@
-import { User } from '../../src/domain/User';
+import { Role, User } from '../../src/domain/User';
 import { ImaginaryDB } from '../../src/infrastructure/ImaginaryDB';
 
 export class UserFixture {
@@ -15,7 +15,7 @@ export class UserFixture {
 		if (retrievedUser === null) {
 			return false;
 		}
-		return retrievedUser.isGuest();
+		return retrievedUser.role === Role.guest;
 	}
 
 	clear (): void {

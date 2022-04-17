@@ -1,19 +1,16 @@
+export enum Role {
+	guest = 'ROLE_GUEST',
+	admin = 'ROLE_ADMIN',
+}
+
 export class User {
 	userId: string;
 	name: string;
-	private guestRole?: boolean;
+	role: Role;
 
-	constructor (data: { userId: string, name: string, guestRole?: boolean }) {
+	constructor (data: { userId: string, name: string, role?: Role }) {
 		this.userId = data.userId;
 		this.name = data.name;
-		this.guestRole = data.guestRole;
-	}
-
-	public makeGuest (role: boolean): void {
-		this.guestRole = role;
-	}
-
-	public isGuest (): boolean {
-		return this.guestRole || false;
+		this.role = data.role || Role.guest;
 	}
 }

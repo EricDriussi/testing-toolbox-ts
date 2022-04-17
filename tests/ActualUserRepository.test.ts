@@ -38,7 +38,7 @@ describe('ActualUserRepository should', () => {
 
 			repo.save(savedUser);
 
-			expect(fixture.checkRoleIsGuest(savedUser)).toEqual(false);
+			expect(fixture.checkRoleIsGuest(savedUser)).toEqual(true);
 		});
 	});
 });

@@ -1,27 +1,42 @@
 import { UserService } from '../src/app-service/UserService';
-import { FakeInMemoryUserRepository } from './doubles/FakeInMemoryUserRepository';
-import { User } from '../src/domain/User';
+import { StubInMemoryAdminUserRepository } from './doubles/StubInMemoryAdminUserRepository';
+import { StubInMemoryGuestUserRepository } from './doubles/StubInMemoryGuestUserRepository';
+import { Role } from '../src/domain/User';
 
 describe('UserService should', () => {
-	const fakeRepo = new FakeInMemoryUserRepository([
-		new User({ userId: '123', name: 'fakeNotGuestUser', guestRole: false }),
-		new User({ userId: '321', name: 'fakeGuestUser', guestRole: true })
-	]);
+	const stubAdminRepo = new StubInMemoryAdminUserRepository();
+	const stubGuestRepo = new StubInMemoryGuestUserRepository();
 
 	it('do something cool!', () => {
-		const service = new UserService(fakeRepo);
+		const service = new UserService(stubAdminRepo);
 		const nice = service.doSomethingCool();
 		expect(nice).toEqual(69);
 	});
 
-	describe('find', () => {
-		it('a guest user', () => {
-			const service = new UserService(fakeRepo);
-			expect(service.findGuest('321').userId).toEqual('321');
+	describe('for guests', () => {
+		describe('find', () => {
+			it('a guest user', () => {
+				const service = new UserService(stubGuestRepo);
+				expect(service.findGuest('stubGuestUser1').name).toEqual('stubGuestUserJohn');
+			});
+			it('throw exception if not a guest', () => {
+				const service = new UserService(stubAdminRepo);
+				expect(() => { service.findGuest('stubAdminUser1'); }).toThrow(Error('Not a guest user!'));
+			});
 		});
-		it('return null if not a guest', () => {
-			const service = new UserService(fakeRepo);
-			expect(() => { service.findGuest('123'); }).toThrow(Error('Not a guest user!'));
+	});
+
+	describe('for admins', () => {
+		describe('turn to guest', () => {
+			it('an admin user', () => {
+				const service = new UserService(stubAdminRepo);
+				service.turnAdminToGuest('stubAdminUser1');
+				expect(stubAdminRepo.findByUserId('stubAdminUser1').role).toEqual(Role.guest);
+			});
+			it('throw exception if not an admin', () => {
+				const service = new UserService(stubGuestRepo);
+				expect(() => { service.turnAdminToGuest('stubGuestUser1'); }).toThrow(Error('Not an admin user!'));
+			});
 		});
 	});
 });
